@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes do Anime</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <a href="index.html" class="back-link">⬅ Voltar</a>
+
+  <h1 id="anime-title"></h1>
+
+  <div id="tabs">
+    <button class="tab-btn" data-tab="info">Informações</button>
+    <button class="tab-btn" data-tab="trailer">Trailer</button>
+    <button class="tab-btn" data-tab="manga">Mangá</button>
+  </div>
+
+  <div id="tab-content">
+    <div id="info" class="tab-panel"></div>
+    <div id="trailer" class="tab-panel"></div>
+    <div id="manga" class="tab-panel"></div>
+  </div>
+
+  <div class="ad-container">
+    <iframe src="https://via.placeholder.com/728x90?text=Anuncio" width="728" height="90"></iframe>
+  </div>
+
+  <script>
+  const params = new URLSearchParams(window.location.search);
+  const animeId = params.get('id');
+
+  async function carregarAnime(id){
+    const res = await fetch(`https://api.jikan.moe/v4/anime/${id}`);
+    const data = await res.json();
+    const anime = data.data;
+
+    document.getElementById('anime-title').textContent = anime.title;
+
+    document.getElementById('info').innerHTML = `
+      <img src="${anime.images.jpg.large_image_url}" style="width:200px; float:left; margin-right:20px;">
+      <p><strong>Sinopse:</strong> ${anime.synopsis || 'Sem descrição.'}</p>
+      <p><strong>Nota:</strong> ${anime.score || 'N/A'}</p>
+      <p><strong>Episódios:</strong> ${anime.episodes || 'N/A'}</p>
+      <p><strong>Status:</strong> ${anime.status || 'N/A'}</p>
+      <div style="clear:both;"></div>
+    `;
+
+    const trailerDiv = document.getElementById('trailer');
+    const trailer = anime.trailer?.youtube_id;
+    trailerDiv.innerHTML = trailer ? 
+      `<iframe width="560" height="315" src="https://www.youtube.com/embed/${trailer}" frameborder="0" allowfullscreen></iframe>` :
+      `<p>Trailer não disponível</p>`;
+
+    document.getElementById('manga').innerHTML = anime.related?.Adaptation?.map(m=>`
+      <p><a href="${m.url}" target="_blank">${m.title}</a></p>
+    `).join('') || '<p>Mangá não disponível</p>';
+  }
+
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      panels.forEach(p=>p.style.display='none');
+      document.getElementById(tab.dataset.tab).style.display='block';
+    });
+  });
+
+  document.getElementById('info').style.display='block';
+  carregarAnime(animeId);
+  </script>
+</body>
+</html>
