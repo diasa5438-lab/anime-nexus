@@ -1,0 +1,21 @@
+body { background:#12121f; color:#eee; font-family:Arial,sans-serif; margin:0; padding:20px; }
+h1 { text-align:center; color:#ff4757; }
+#search-bar { display:flex; max-width:500px; margin:20px auto; gap:10px; }
+#search-input { flex:1; padding:10px 15px; border-radius:25px; border:none; outline:none; }
+#search-btn { background:#ff4757; border:none; color:white; border-radius:25px; padding:10px 20px; cursor:pointer; }
+#anime-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; max-width:1000px; margin:auto; }
+.anime-card { background:#1f1f33; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }
+.anime-img { width:100%; height:380px; object-fit:cover; cursor:pointer; }
+.anime-content { padding:15px; display:flex; flex-direction:column; flex:1; }
+.anime-title { color:#ff6f81; font-weight:bold; margin-bottom:10px; }
+.anime-actions { display:flex; justify-content:space-between; }
+.btn { background:#ff4757; color:white; border:none; border-radius:25px; padding:8px 15px; cursor:pointer; font-weight:bold; }
+.btn:hover { background:#e03e4e; }
+#fav-list { max-width:600px; margin:40px auto; text-align:center; color:#aaa; }
+.back-link { color:#ff4757; display:inline-block; margin-bottom:20px; text-decoration:none; font-weight:bold; }
+#ad-container { margin:30px auto; text-align:center; }
+#tabs { display:flex; gap:10px; margin:20px 0; }
+.tab-btn { background:#ff4757; border:none; color:white; padding:8px 15px; border-radius:25px; cursor:pointer; font-weight:bold; }
+.tab-btn:hover { background:#e03e4e; }
+.tab-panel { display:none; }
+@media(max-width:480px){ .anime-img{height:260px;} iframe{height:260px;} }
